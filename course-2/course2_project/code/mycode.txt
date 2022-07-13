@@ -93,6 +93,6 @@ def IKinBodyIterates(Blist, M, T, thetalist0, eomg, ev):
                                                        thetalist[i])), T)))
         err = np.linalg.norm([Vb[0], Vb[1], Vb[2]]) > eomg \
               or np.linalg.norm([Vb[3], Vb[4], Vb[5]]) > ev
-        # save to csv
-        np.savetxt('iterates.csv', thetalist, delimiter=",", fmt = '%.3f')
+    # save to csv
+    np.savetxt('iterates.csv', thetalist, delimiter=",", fmt = '%.3f')
     return (thetalist[-1], not err)
