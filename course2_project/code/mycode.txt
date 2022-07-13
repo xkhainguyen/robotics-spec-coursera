@@ -1,0 +1,98 @@
+def IKinBodyIterates(Blist, M, T, thetalist0, eomg, ev):
+    """Works like IKinBody() but also prints out a report for each iteration of 
+    the Newton-Raphson process
+
+    :param Blist: The joint screw axes in the end-effector frame when the
+                  manipulator is at the home position, in the format of a
+                  matrix with axes as the columns
+    :param M: The home configuration of the end-effector
+    :param T: The desired end-effector configuration Tsd
+    :param thetalist0: An initial guess of joint angles that are close to
+                       satisfying Tsd
+    :param eomg: A small positive tolerance on the end-effector orientation
+                 error. The returned joint angles must give an end-effector
+                 orientation error less than eomg
+    :param ev: A small positive tolerance on the end-effector linear position
+               error. The returned joint angles must give an end-effector
+               position error less than ev
+    :return thetalist[-1]: Joint angles that achieve T within the specified
+                       tolerances,
+    :return success: A logical value where TRUE means that the function found
+                     a solution and FALSE means that it ran through the set
+                     number of maximum iterations without finding a solution
+                     within the tolerances eomg and ev.    
+
+    Prints out a report as follows:
+
+        Iteration 3:
+        joint vector: [0.221, 0.375, 2.233, 1.414]
+        SE(3) end-effector config: 
+        [1.000 0.000 0.000 3.275 
+         0.000 1.000 0.000 4.162 
+         0.000 0.000 1.000 -5.7320  
+         0.000 0.000 0.000 1.000]
+        error twist V_b: [0.232, 0.171, 0.211, 0.345, 1.367, -0.222]
+        angular error magnitude ||omega_b||: 0.357
+        linear error magnitude ||v_b||: 1.427
+
+    The joint vector of each iteration is saved as a row in a matrix. The 
+    matrix is saved in iterates.csv, where each row of the text file consists of
+    the comma separated joint values for that iterate.
+
+    Example Input:
+        Blist = np.array([[0, 0, -1, 2, 0,   0],
+                          [0, 0,  0, 0, 1,   0],
+                          [0, 0,  1, 0, 0, 0.1]]).T
+        M = np.array([[-1, 0,  0, 0],
+                      [ 0, 1,  0, 6],
+                      [ 0, 0, -1, 2],
+                      [ 0, 0,  0, 1]])
+        T = np.array([[0, 1,  0,     -5],
+                      [1, 0,  0,      4],
+                      [0, 0, -1, 1.6858],
+                      [0, 0,  0,      1]])
+        thetalist0 = np.array([1.5, 2.5, 3])
+        eomg = 0.01
+        ev = 0.001
+    Output:
+        (np.array([1.57073819, 2.999667, 3.14153913]), True)
+    """
+
+    i = 0
+    maxiterations = 20
+    # initialize an empty list with proper dimensions and append thetalist0
+    thetalist = np.empty(shape=[0, len(thetalist0)])
+    thetalist = np.append(thetalist, [thetalist0], axis=0)
+
+    Vb = se3ToVec(MatrixLog6(np.dot(TransInv(FKinBody(M, Blist, \
+                                                      thetalist[0])), T)))
+    err = np.linalg.norm([Vb[0], Vb[1], Vb[2]]) > eomg \
+          or np.linalg.norm([Vb[3], Vb[4], Vb[5]]) > ev
+
+    while err and i < maxiterations:
+        # printing report
+        print(f"Interation {i}:") 
+        print("joint vector:", np.array_str(thetalist[i], precision=3, 
+                                                        suppress_small=True))   
+        print("SE(3) end-effector config:\n", np.array_str((FKinBody(M, Blist, \
+                                                       thetalist[i])), 
+                                            precision=3, suppress_small=True))
+        print("error twist V_b:", np.array_str(Vb, precision=3, 
+                                                        suppress_small=True))  
+        print(f"angular error magnitude ||omega_b||: {np.linalg.norm([Vb[0], Vb[1], Vb[2]]):.3f}") 
+        print(f"linear error magnitude ||v_b||: {np.linalg.norm([Vb[3], Vb[4], Vb[5]]):.3f}\n")       
+
+        # calculate new theta and append to thetalist
+        thetalist = np.append(thetalist, [(thetalist[i] \
+                    + np.dot(np.linalg.pinv(JacobianBody(Blist, \
+                                                         thetalist[i])), Vb))],
+                                                         axis=0)   
+        i = i + 1
+        Vb \
+        = se3ToVec(MatrixLog6(np.dot(TransInv(FKinBody(M, Blist, \
+                                                       thetalist[i])), T)))
+        err = np.linalg.norm([Vb[0], Vb[1], Vb[2]]) > eomg \
+              or np.linalg.norm([Vb[3], Vb[4], Vb[5]]) > ev
+        # save to csv
+        np.savetxt('iterates.csv', thetalist, delimiter=",", fmt = '%.3f')
+    return (thetalist[-1], not err)

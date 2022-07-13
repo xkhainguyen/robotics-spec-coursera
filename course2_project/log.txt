@@ -1,0 +1,54 @@
+Interation 0:
+joint vector: [-0.1 -1.5 -1.5 -2.   2.  -1. ]
+SE(3) end-effector config:
+ [[-0.69   0.691  0.215 -0.418]
+ [ 0.563  0.7   -0.44   0.117]
+ [-0.454 -0.183 -0.872  0.47 ]
+ [ 0.     0.     0.     1.   ]]
+error twist V_b: [ 0.609 -0.956  0.581  0.35   0.006  0.182]
+angular error magnitude ||omega_b||: 1.274
+linear error magnitude ||v_b||: 0.395
+
+Interation 1:
+joint vector: [-0.496 -2.097 -1.723 -1.875  2.917 -1.053]
+SE(3) end-effector config:
+ [[-0.018  0.954 -0.301 -0.475]
+ [ 0.135 -0.296 -0.946  0.29 ]
+ [-0.991 -0.057 -0.123  0.121]
+ [ 0.     0.     0.     1.   ]]
+error twist V_b: [-0.304 -0.132  0.038  0.009  0.005  0.193]
+angular error magnitude ||omega_b||: 0.333
+linear error magnitude ||v_b||: 0.194
+
+Interation 2:
+joint vector: [-0.163 -2.092 -1.805 -2.179  2.996 -1.344]
+SE(3) end-effector config:
+ [[ 0.022  1.    -0.02  -0.494]
+ [ 0.029 -0.02  -0.999  0.109]
+ [-0.999  0.022 -0.03   0.094]
+ [ 0.     0.     0.     1.   ]]
+error twist V_b: [-0.02  -0.03  -0.022 -0.007 -0.006  0.009]
+angular error magnitude ||omega_b||: 0.042
+linear error magnitude ||v_b||: 0.013
+
+Interation 3:
+joint vector: [-0.143 -2.12  -1.729 -2.429  3.002 -1.565]
+SE(3) end-effector config:
+ [[ 0.     1.    -0.003 -0.5  ]
+ [ 0.001 -0.003 -1.     0.1  ]
+ [-1.     0.    -0.001  0.102]
+ [ 0.     0.     0.     1.   ]]
+error twist V_b: [-0.003 -0.001 -0.     0.002 -0.    -0.   ]
+angular error magnitude ||omega_b||: 0.003
+linear error magnitude ||v_b||: 0.002
+
+Interation 4:
+joint vector: [-0.143 -2.125 -1.727 -2.432  2.999 -1.571]
+SE(3) end-effector config:
+ [[-0.   1.  -0.  -0.5]
+ [-0.  -0.  -1.   0.1]
+ [-1.  -0.   0.   0.1]
+ [ 0.   0.   0.   1. ]]
+error twist V_b: [-0.  0.  0. -0. -0.  0.]
+angular error magnitude ||omega_b||: 0.000
+linear error magnitude ||v_b||: 0.000
