@@ -1,0 +1,13 @@
+# obstacles.csv file for V-REP kilobot motion planning scene.
+# All lines beginning with a # are treated as a comment and ignored.
+# Below is a specification of a set of cylindrical obstacles in the form
+# x,y,diameter
+# where (x,y) is the center of the cylinder and diameter is its diameter.
+0.0, 0.0, 0.2
+0.0, 0.1, 0.2
+0.3, 0.2, 0.2
+-0.3, -0.2, 0.2
+-0.1, -0.4, 0.2
+-0.2, 0.3, 0.2
+0.3, -0.3, 0.2
+0.1, 0.4, 0.2

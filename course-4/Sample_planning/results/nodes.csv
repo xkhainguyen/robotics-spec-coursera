@@ -1,0 +1,10 @@
+# nodes.csv file for V-REP kilobot motion planning scene.
+# All lines beginning with a # are treated as a comment and ignored.
+# Each line below has the form
+# ID,x,y,heuristic-cost-to-go
+# where ID is the unique integer ID number of the node (1 through N),
+# (x,y) is the location of the node in the plane, and heuristic-cost-to-go
+# is an optimistic estimate of the path length from that node to the
+# goal node, as needed by A* search.
+1,-0.5,-0.5,1.4142
+2,0.5,0.5,0
