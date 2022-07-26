@@ -20,4 +20,4 @@ Some figures:
 
 ![PRM](Screenshot_PRM.png)
 
-![RRT](Screenshot_RRT.png)
+![RRT](Screenshot_rrt.png)
